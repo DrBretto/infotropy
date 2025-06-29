@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Standard CSS for main layout grid */
+main {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  overflow: hidden;
+  /* No padding or gap here */
+}
+
+/* Standard CSS for the ScreenContainer */
+.screen-container {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  border: 2px solid green;
+  color: green; /* Primary text color within the screen */
+  box-sizing: border-box; /* Include border in element's total width and height */
+  /* Tailwind classes for rounded corners, shadow, overflow, flex, and spacing will be applied in App.tsx */
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

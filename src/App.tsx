@@ -57,19 +57,17 @@ function App() {
     : "Welcome to Infotropy. Select a module to begin.";
 
   return (
-    // Apply global styling and full-screen layout to the main tag
-    // Removed padding and gap to allow ScreenContainer to fill the space
-    <main className="min-h-screen h-screen overflow-hidden bg-gray-900 text-gray-100 font-inter grid grid-rows-[auto_1fr_auto]">
+    // Apply global styling and full-screen layout to the main tag using Standard CSS
+    <main className="bg-gray-900 text-gray-100 font-inter">
       {" "}
-      {/* Removed p-4 and gap-4 */}
-      {/* Header is in the top grid row */}
+      {/* Removed grid/layout classes, handled by app.css */}
+      {/* Header is in the top grid row (handled by main grid) */}
       <Header layoutState={layoutState} />
       {/* This motion.div is the ScreenContainer - the central grid item */}
-      {/* Apply terminal-like styling: black background, green border, green text */}
-      {/* Ensure it fills the grid cell, removed internal padding and flex properties */}
+      {/* Apply terminal-like styling using Standard CSS class and some Tailwind */}
       <motion.div
-        className="w-full h-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg overflow-hidden" // Removed p-8, flex flex-col, space-y-8
-        layout // Enable layout animations
+        className="screen-container rounded-lg shadow-lg overflow-hidden" // Added screen-container class, removed layout/color/dimension/flex classes
+        layout // Keep layout animation
         transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
       >
         {/* New inner div for content padding and flex layout */}
@@ -90,14 +88,14 @@ function App() {
           <ChatBoxPlaceholder />
         </div>
       </motion.div>
-      {/* NavigationButtons are positioned independently, outside the ScreenContainer */}
+      {/* NavigationButtons are positioned independently, outside the grid flow */}
       {/* Pass back button handler and visibility prop, and layoutState */}
       <NavigationButtons
         onBackToMenu={handleBackToMenu}
         showBackButton={showBackButton}
         layoutState={layoutState}
       />
-      {/* Footer is in the bottom grid row */}
+      {/* Footer is in the bottom grid row (handled by main grid) */}
       <Footer layoutState={layoutState} /> {/* Pass layoutState to Footer */}
     </main>
   );
