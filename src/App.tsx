@@ -66,24 +66,29 @@ function App() {
       <Header layoutState={layoutState} />
       {/* This motion.div is the ScreenContainer - the central grid item */}
       {/* Apply terminal-like styling: black background, green border, green text */}
-      {/* Ensure it fills the grid cell */}
+      {/* Ensure it fills the grid cell, removed internal padding and flex properties */}
       <motion.div
-        className="w-full h-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg p-8 flex flex-col space-y-8 overflow-hidden" // Changed max-w-full to h-full
+        className="w-full h-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg overflow-hidden" // Removed p-8, flex flex-col, space-y-8
         layout // Enable layout animations
         transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
       >
-        {/* Content within the ScreenContainer */}
-        <DescriptionSection
-          activeModule={activeModule} // Pass the activeModule prop
-          description={currentDescription} // Pass the current description
-          layoutState={layoutState}
-        />
-        <CentralContentWindow
-          activeModule={activeModule}
-          onSelectModule={handleSelectModule}
-          layoutState={layoutState}
-        />
-        <ChatBoxPlaceholder />
+        {/* New inner div for content padding and flex layout */}
+        <div className="w-full h-full p-8 flex flex-col space-y-8">
+          {" "}
+          {/* Added padding and flex properties here */}
+          {/* Content within the ScreenContainer */}
+          <DescriptionSection
+            activeModule={activeModule} // Pass the activeModule prop
+            description={currentDescription} // Pass the current description
+            layoutState={layoutState}
+          />
+          <CentralContentWindow
+            activeModule={activeModule}
+            onSelectModule={handleSelectModule}
+            layoutState={layoutState}
+          />
+          <ChatBoxPlaceholder />
+        </div>
       </motion.div>
       {/* NavigationButtons are positioned independently, outside the ScreenContainer */}
       {/* Pass back button handler and visibility prop, and layoutState */}

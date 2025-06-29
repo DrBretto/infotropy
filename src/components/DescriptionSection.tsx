@@ -41,8 +41,10 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
 
   return (
     // Use motion.section for animations and apply dynamic styling
+    // Removed padding - handled by parent inner div
     <motion.section
       className={`space-y-4 mb-8 ${
+        // Removed p-8
         layoutState === "module" ? "text-left w-full" : "text-center" // Adjust text alignment and width for module state
       }`}
       layout // Enable layout animations

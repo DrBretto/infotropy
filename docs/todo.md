@@ -33,34 +33,27 @@ These tasks focus on setting up the basic project structure, main components, st
 - [x] Write basic unit tests for core components (`App`, `Header`, `Footer`).
 - [x] (Optional) Create `Dockerfile` and `docker-compose.yml` for the development environment.
 - [x] Update documentation files (`docs/README.md`, `docs/ARCHITECTURE.md`, etc.) with any implementation-specific details or decisions made during these tasks.
-- [ ] **Revise Layout Implementation (Attempt 2):**
-  - [ ] Adjust Main Layout Structure (`App.tsx`) to remove padding/gap from `main` and introduce a `ScreenContainer` (using the existing `motion.div`) that fills the middle grid row with black background, green border, and green text.
-  - [ ] Adjust Header and Footer Styling to add internal padding.
-  - [ ] Review Component Text Colors (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure they inherit from the `ScreenContainer` where appropriate.
-  - [ ] Update Central Content Window Styling (`CentralContentWindow.tsx`) to confirm the nested "window" border and flex-grow are correct within the `ScreenContainer`.
-  - [ ] Create a test for the `ChatBoxPlaceholder` component.
+- [ ] **Revise Layout Implementation (Attempt 3):** Needs revision.
+  - [x] Adjust Main Layout Structure (`App.tsx`) to remove padding/gap from `main` and remove internal padding from the `ScreenContainer`.
+  - [x] Adjust Header and Footer Styling to add internal padding.
+  - [x] Review Component Text Colors (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure they inherit from the `ScreenContainer` where appropriate.
+  - [x] Update Central Content Window Styling (`CentralContentWindow.tsx`) to confirm the nested "window" border and flex-grow are correct within the `ScreenContainer`.
+  - [x] Create a test for the `ChatBoxPlaceholder` component.
+  - [x] Run all tests.
+  - [x] Commit the changes to Git.
+  - [x] Push the changes to the remote repository.
+  - [x] Build the application.
+  - [x] Deploy the updated build to S3.
+  - [x] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
+- [ ] **Revise Layout Implementation (Attempt 4):**
+  - [ ] Adjust Main Layout Structure (`App.tsx`) to remove `flex flex-col space-y-8` and `p-8` from `ScreenContainer` and add a new inner `div` with `w-full h-full p-8 flex flex-col space-y-8`.
+  - [ ] Review Children Component Styling (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to remove any padding added in Attempt 3.
   - [ ] Run all tests.
   - [ ] Commit the changes to Git.
   - [ ] Push the changes to the remote repository.
   - [ ] Build the application.
   - [ ] Deploy the updated build to S3.
   - [ ] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
-
-## Matter.js Simulation Module Tasks
-
-These tasks focus on implementing the first simulation module. This section should only be addressed after the "Core Structure Tasks" are completed and verified.
-
-- [x] Create the module directory `src/modules/matterjs-simulation/`.
-- [x] Create the main component file `src/modules/matterjs-simulation/MatterJsSimulation.js`.
-- [x] Implement the Matter.js simulation logic within the `MatterJsSimulation` component, including canvas setup, engine, renderer, world, boundaries, and bouncing balls as described in the original `info.md`.
-- [x] Ensure the simulation is responsive and handles canvas resizing.
-- [x] Implement cleanup logic for the Matter.js instance.
-- [x] Create the module documentation file `docs/modules/matterjs-simulation.md`, including a description for the Description Section.
-- [x] Add the Matter.js simulation module to the list of available modules in the `Module Menu Component`.
-- [x] Update the state management logic in `App` to handle the "matterjs-simulation" state.
-- [x] Ensure the `Description Section` displays the Matter.js simulation description when this module is active.
-- [x] Write unit and integration tests for the `MatterJsSimulation` component.
-- [x] Update documentation files with any implementation-specific details or decisions.
 
 ## Future Module Tasks
 
