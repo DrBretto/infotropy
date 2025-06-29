@@ -1,0 +1,18 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173" # Map host port 5173 to container port 5173 (Vite default)
+    volumes:
+      - .:/app # Mount the project directory into the container
+      - /app/node_modules # Exclude node_modules from the mount to use the container's installed dependencies
+    environment:
+      # Add any environment variables needed for development here
+      NODE_ENV: development
+    # Command to override the default CMD in Dockerfile if needed
+    # command: npm run dev
