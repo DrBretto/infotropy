@@ -1,6 +1,6 @@
 # Project Architecture
 
-This document outlines the architectural design and principles for the Infotropy front-end project. The goal is to create a modular, scalable, and maintainable single-page application designed with future expansion by AI agents in mind.
+This document outlines the architectural design and principles for the Infotropy front-end project. The goal is to create a modular, scalable, and maintainable single-page application designed with future expansion by AI agents in mind, featuring a terminal-like aesthetic.
 
 ## Core Principles
 
@@ -10,40 +10,39 @@ This document outlines the architectural design and principles for the Infotropy
 - **Single Source of Truth:** Application state is centralized to avoid inconsistencies.
 - **Convention over Configuration:** Establishing clear patterns for adding new modules and features.
 - **Documentation:** Comprehensive markdown documentation is maintained to guide development (human and AI).
+- **Terminal Aesthetic:** A consistent visual theme mimicking a classic terminal interface.
 
 ## High-Level Structure
 
-The application follows a full-screen, non-scrolling layout with a dynamic central content area, a dynamic description section, and a dynamic header that transforms into a navigation bar.
+The application follows a full-screen, non-scrolling layout with a distinct "screen" area containing the main content and a chat box placeholder, framed by a header and footer.
 
 ```mermaid
 graph TD
-    A[App Component] --> B(Full-Screen Container)
-    B --> C(Header - Dynamic)
-    B --> D(Description Section - Dynamic)
-    B --> E(Central Content Window)
-    B --> F(Footer)
+    App --> Header
+    App --> ScreenArea
+    App --> Footer
 
-    A --> G{Layout State: Menu vs. Module}
-    G -- Controls Rendering/Styling --> C
-    G -- Controls Content/Styling --> D
-    G -- Controls Content/Styling --> E
+    ScreenArea --> DescriptionSection
+    ScreenArea --> CentralContentWindow
+    ScreenArea --> ChatBoxPlaceholder
 
-    E -- Renders based on State --> H(Module Menu Component)
-    E -- Renders based on State --> I(Module Component)
+    CentralContentWindow --> ModuleMenu
+    CentralContentWindow --> MatterJsSimulation (Conditional)
+    CentralContentWindow --> OtherModules (Conditional)
 
-    H -- Selects Module --> G
-    C -- Includes Navigation Buttons --> G
+    App --> NavigationButtons (Fixed Position)
 ```
 
-- **`App` Component:** The root component. Manages the global application state, including the `activeModule` and potentially a `layoutState` (e.g., 'menu', 'module'). This state dictates which components are visible and their styling/positioning for animated transitions.
-- **`Full-Screen Container`:** The main container element (e.g., the `<main>` tag) will be styled to occupy the full viewport height (`min-h-screen`, `h-screen`) and prevent overflow (`overflow-hidden`).
-- **`Header` Component (Dynamic):** This component will render differently based on the `layoutState`. In the 'menu' state, it's a prominent title. In the 'module' state, it transforms into a compact navigation bar, potentially including the site title and navigation buttons. Animations will be applied to this transformation.
-- **`Description Section` Component (Dynamic):** Displays textual content based on the `activeModule`. Positioned outside the central content window. Its content updates and may animate during layout transitions.
-- **`Central Content Window` Component:** A container component that renders the active module or the module menu. Its size and position may change with animations during layout transitions.
-- **`Footer` Component:** Displays copyright and general site information. Positioned outside the dynamic content area.
-- **`Navigation Buttons` Component:** Contains buttons (e.g., "Back to Menu") that allow the user to change the `layoutState` and `activeModule` state in the `App` component, thereby switching the content displayed. These buttons will likely be integrated into the dynamic Header/Navigation Bar when a module is active.
-- **`Module Menu Component`:** A specific component rendered in the `Central Content Window` when the `layoutState` is 'menu'. It lists available modules and allows users to select them, updating the `layoutState` and `activeModule`.
-- **`Module Components`:** Individual components or sets of components representing simulations, features (like the AI chat), or other content. Each module component is self-contained and designed to be rendered within the `Central Content Window` when the `layoutState` is 'module'. They should accept necessary data (like their description) via props.
+- **`App` Component:** The root component. Manages the global application state, including the `activeModule` and `layoutState`. This state dictates which components are visible and their styling/positioning for animated transitions. It orchestrates the main layout structure (Header, Screen Area, Footer).
+- **`Header` Component:** Renders at the top of the viewport. Its appearance may change based on the `layoutState`.
+- **`Footer` Component:** Renders at the bottom of the viewport, typically displaying copyright information.
+- **`ScreenArea` (Conceptual):** This represents the main central region of the application, styled to resemble a terminal screen with a black background and colored borders. It acts as a container for the `DescriptionSection`, `CentralContentWindow`, and `ChatBoxPlaceholder`. This is implemented as a `motion.div` within the `App` component's main grid.
+- **`Description Section` Component:** Displays textual content based on the `activeModule`. Positioned within the `ScreenArea`. Its content updates and may animate during layout transitions.
+- **`Central Content Window` Component:** A container component rendered within the `ScreenArea` that displays the active module or the module menu. It is styled as a nested "window" with colored borders and takes up the available space between the Description Section and the Chat Box Placeholder.
+- **`ChatBoxPlaceholder` Component:** A placeholder component rendered at the bottom of the `ScreenArea`. It represents the future chat interface for LLM interaction and navigation.
+- **`Navigation Buttons` Component:** Contains buttons (e.g., "Back to Menu") that allow the user to change the `layoutState` and `activeModule` state in the `App` component. These buttons are positioned independently, likely fixed in a corner.
+- **`Module Menu Component`:** A specific component rendered in the `Central Content Window` when the `layoutState` is 'menu'. It lists available modules and allows users to select them.
+- **`Module Components`:** Individual components representing simulations, features, or other content, rendered within the `Central Content Window` when the `layoutState` is 'module'.
 - **`State Management`:** Centralized in `App` to manage `activeModule` and `layoutState`.
 - **`Animation Layer`:** Integration of an animation library (Framer Motion) to smoothly transition elements between layout states.
 

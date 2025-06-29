@@ -13,21 +13,21 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   showBackButton,
   layoutState, // Destructure the new prop
 }) => {
-  // Only show the button in the 'module' layout state
+  // Only show the button in the 'module' layout state and if showBackButton is true
   const shouldShowButton = showBackButton && layoutState === "module";
 
   return (
     // Use AnimatePresence for exit animations
     <AnimatePresence>
       {shouldShowButton && (
-        // Use motion.div for animations
+        // Use motion.div for animations and apply styling for fixed position
         <motion.div
           key="back-button" // Unique key for animation
-          initial={{ opacity: 0, y: 10 }} // Initial state
+          initial={{ opacity: 0, y: 20 }} // Initial state (slide in from bottom)
           animate={{ opacity: 1, y: 0 }} // Animation to state
-          exit={{ opacity: 0, y: 10 }} // Animation on exit
+          exit={{ opacity: 0, y: 20 }} // Animation on exit (slide out to bottom)
           transition={{ duration: 0.3, ease: "easeInOut" }} // Configure transition
-          className="text-center mt-4" // Apply styling
+          className="fixed bottom-4 right-4 z-50" // Apply fixed positioning to bottom right
         >
           <button
             onClick={onBackToMenu}

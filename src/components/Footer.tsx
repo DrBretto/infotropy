@@ -11,7 +11,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ layoutState }) => {
   // Conditional styling based on layoutState can be added here if needed
   return (
-    // Use motion.footer for animations
+    // Use motion.footer for animations and apply styling
     <motion.footer
       className={`text-center text-gray-400 text-sm mt-8 ${
         layoutState === "module" ? "opacity-75" : "" // Example: slightly less opaque in module state

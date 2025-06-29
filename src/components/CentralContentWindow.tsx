@@ -2,6 +2,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
 import ModuleMenu from "./ModuleMenu"; // Import the ModuleMenu component
+import MatterJsSimulation from "../modules/matterjs-simulation/MatterJsSimulation"; // Import the MatterJsSimulation component
 
 interface CentralContentWindowProps {
   activeModule: string | null; // null for the main menu/intro
@@ -31,18 +32,17 @@ const CentralContentWindow: React.FC<CentralContentWindowProps> = ({
         </motion.div>
       );
     } else if (activeModule === "matterjs-simulation") {
-      // Render specific placeholder for Matter.js simulation when in module state
+      // Render the Matter.js simulation component
       return (
         <motion.div
-          key="matterjs-placeholder" // Unique key for animation
+          key="matterjs-simulation" // Unique key for animation
           initial={{ opacity: 0, y: 10 }} // Initial state
           animate={{ opacity: 1, y: 0 }} // Animation to state
           exit={{ opacity: 0, y: -10 }} // Animation on exit
           transition={{ duration: 0.3, ease: "easeInOut" }} // Configure transition
-          className="text-center text-gray-400 w-full h-full flex items-center justify-center" // Ensure placeholder fills the container
+          className="w-full h-full" // Ensure simulation fills the container
         >
-          Matter.js Simulation Placeholder
-          {/* The actual Matter.js component will be rendered here later */}
+          <MatterJsSimulation />
         </motion.div>
       );
     } else {
@@ -63,9 +63,12 @@ const CentralContentWindow: React.FC<CentralContentWindowProps> = ({
   };
 
   return (
-    // Use motion.div for animations and apply styling
+    // Use motion.div for animations and apply dynamic styling
+    // Added green border and ensured flex-grow in module state
     <motion.div
-      className="w-full h-64 bg-gray-700 bg-opacity-50 rounded-md shadow-inner flex items-center justify-center"
+      className={`w-full bg-gray-700 bg-opacity-50 rounded-md shadow-inner flex items-center justify-center border-green-500 border-2 ${
+        layoutState === "menu" ? "h-64" : "flex-grow" // Adjust height based on layout state
+      }`}
       layout // Enable layout animations
       transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
     >

@@ -11,7 +11,7 @@ This document tracks the tasks required to build the Infotropy front-end project
 
 ## Core Structure Tasks
 
-These tasks focus on setting up the basic project structure, main components, state management, and initial styling.
+These tasks focus on setting up the basic project structure, main components, state management, and initial styling, including the terminal-like layout.
 
 - [x] Initialize a new React project (e.g., using Vite or Create React App).
 - [x] Install necessary dependencies (React, Tailwind CSS, Matter.js, AWS SDK for JavaScript).
@@ -33,22 +33,26 @@ These tasks focus on setting up the basic project structure, main components, st
 - [x] Write basic unit tests for core components (`App`, `Header`, `Footer`).
 - [x] (Optional) Create `Dockerfile` and `docker-compose.yml` for the development environment.
 - [x] Update documentation files (`docs/README.md`, `docs/ARCHITECTURE.md`, etc.) with any implementation-specific details or decisions made during these tasks.
+- [x] Refine Main Layout Structure (`App.tsx`) for the "Screen" area styling (black background, green border, green text, flex column).
+- [x] Create Chat Box Placeholder Component (`ChatBoxPlaceholder.tsx`).
+- [x] Update Central Content Window Styling (`CentralContentWindow.tsx`) for the nested "window" border and flex-grow.
+- [x] Update Component Text Colors (Header, Footer, DescriptionSection, ModuleMenu, NavigationButtons) to green where appropriate for the terminal aesthetic.
 
 ## Matter.js Simulation Module Tasks
 
 These tasks focus on implementing the first simulation module. This section should only be addressed after the "Core Structure Tasks" are completed and verified.
 
-- [ ] Create the module directory `src/modules/matterjs-simulation/`.
-- [ ] Create the main component file `src/modules/matterjs-simulation/MatterJsSimulation.js`.
-- [ ] Implement the Matter.js simulation logic within the `MatterJsSimulation` component, including canvas setup, engine, renderer, world, boundaries, and bouncing balls as described in the original `info.md`.
-- [ ] Ensure the simulation is responsive and handles canvas resizing.
-- [ ] Implement cleanup logic for the Matter.js instance.
-- [ ] Create the module documentation file `docs/modules/matterjs-simulation.md`, including a description for the Description Section.
-- [ ] Add the Matter.js simulation module to the list of available modules in the `Module Menu Component`.
-- [ ] Update the state management logic in `App` to handle the "matterjs-simulation" state.
-- [ ] Ensure the `Description Section` displays the Matter.js simulation description when this module is active.
-- [ ] Write unit and integration tests for the `MatterJsSimulation` component.
-- [ ] Update documentation files with any implementation-specific details or decisions.
+- [x] Create the module directory `src/modules/matterjs-simulation/`.
+- [x] Create the main component file `src/modules/matterjs-simulation/MatterJsSimulation.js`.
+- [x] Implement the Matter.js simulation logic within the `MatterJsSimulation` component, including canvas setup, engine, renderer, world, boundaries, and bouncing balls as described in the original `info.md`.
+- [x] Ensure the simulation is responsive and handles canvas resizing.
+- [x] Implement cleanup logic for the Matter.js instance.
+- [x] Create the module documentation file `docs/modules/matterjs-simulation.md`, including a description for the Description Section.
+- [x] Add the Matter.js simulation module to the list of available modules in the `Module Menu Component`.
+- [x] Update the state management logic in `App` to handle the "matterjs-simulation" state.
+- [x] Ensure the `Description Section` displays the Matter.js simulation description when this module is active.
+- [x] Write unit and integration tests for the `MatterJsSimulation` component.
+- [x] Update documentation files with any implementation-specific details or decisions.
 
 ## Future Module Tasks
 

@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useState, useMemo } from "react"; // Import React, useState, and useMemo
+import React, { useState, useMemo, useEffect } from "react"; // Import React, useState, useMemo, and useEffect
 import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
 
 // Import the components we created
@@ -8,9 +8,20 @@ import Footer from "./components/Footer";
 import DescriptionSection from "./components/DescriptionSection";
 import CentralContentWindow from "./components/CentralContentWindow";
 import NavigationButtons from "./components/NavigationButtons";
+import ChatBoxPlaceholder from "./components/ChatBoxPlaceholder"; // Import the ChatBoxPlaceholder component
+
+// Import the Matter.js Simulation module
+import MatterJsSimulation from "./modules/matterjs-simulation/MatterJsSimulation";
 
 // Import the main CSS file (now in src/)
 import "./app.css";
+
+// Define descriptions for each module
+const moduleDescriptions: { [key: string]: string } = {
+  "matterjs-simulation":
+    "A simple physics simulation using Matter.js, demonstrating basic rigid body dynamics with boundaries and bouncing balls.",
+  // Add descriptions for future modules here
+};
 
 function App() {
   // State to track the active module (null for main menu)
@@ -21,6 +32,11 @@ function App() {
     () => (activeModule === null ? "menu" : "module"),
     [activeModule]
   );
+
+  // Add a console log to identify the deployed version
+  useEffect(() => {
+    console.log(`Infotropy App Version: ${new Date().toISOString()}`);
+  }, []); // Run only once on component mount
 
   // Function to handle navigation to a module
   const handleSelectModule = (moduleName: string) => {
@@ -35,19 +51,27 @@ function App() {
   // Determine if the back button should be shown
   const showBackButton = activeModule !== null;
 
+  // Get the description for the active module
+  const currentDescription = activeModule
+    ? moduleDescriptions[activeModule]
+    : "Welcome to Infotropy. Select a module to begin.";
+
   return (
     // Apply global styling and full-screen layout to the main tag
-    <main className="min-h-screen h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 font-inter p-4 sm:p-8 flex flex-col items-center">
-      {/* Wrap inner content with motion.div for layout animations */}
+    // Adjusted padding and removed center items for full spread
+    <main className="min-h-screen h-screen overflow-hidden bg-gray-900 text-gray-100 font-inter p-8 grid grid-rows-[auto_1fr_auto] gap-8">
+      {/* Wrap inner content with motion.div for layout animations - This is the "Screen" area */}
+      {/* Apply terminal-like styling: black background, green border, green text */}
       <motion.div
-        className="w-full max-w-4xl bg-gray-800 bg-opacity-70 rounded-xl shadow-lg p-6 sm:p-8 space-y-8 mb-8 flex flex-col items-center"
+        className="w-full max-w-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg p-8 flex flex-col space-y-8"
         layout // Enable layout animations
         transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
       >
-        {/* Pass layoutState to components that need to react to it */}
+        {/* Pass layoutState and activeModule to components that need to react to it */}
         <Header layoutState={layoutState} />
         <DescriptionSection
-          activeModule={activeModule}
+          activeModule={activeModule} // Pass the activeModule prop
+          description={currentDescription} // Pass the current description
           layoutState={layoutState}
         />
         {/* Pass activeModule state AND handleSelectModule to CentralContentWindow */}
@@ -56,6 +80,8 @@ function App() {
           onSelectModule={handleSelectModule}
           layoutState={layoutState}
         />
+        {/* Add the Chat Box Placeholder */}
+        <ChatBoxPlaceholder />
         {/* Pass back button handler and visibility prop, and layoutState */}
         <NavigationButtons
           onBackToMenu={handleBackToMenu}
