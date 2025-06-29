@@ -33,10 +33,17 @@ These tasks focus on setting up the basic project structure, main components, st
 - [x] Write basic unit tests for core components (`App`, `Header`, `Footer`).
 - [x] (Optional) Create `Dockerfile` and `docker-compose.yml` for the development environment.
 - [x] Update documentation files (`docs/README.md`, `docs/ARCHITECTURE.md`, etc.) with any implementation-specific details or decisions made during these tasks.
-- [x] Refine Main Layout Structure (`App.tsx`) for the "Screen" area styling (black background, green border, green text, flex column).
-- [x] Create Chat Box Placeholder Component (`ChatBoxPlaceholder.tsx`).
-- [x] Update Central Content Window Styling (`CentralContentWindow.tsx`) for the nested "window" border and flex-grow.
-- [x] Update Component Text Colors (Header, Footer, DescriptionSection, ModuleMenu, NavigationButtons) to green where appropriate for the terminal aesthetic.
+- [ ] **Revise Layout Implementation:**
+  - [ ] Adjust Main Layout Structure (`App.tsx`) to introduce a `ScreenContainer` for the static "single screen" area (black background, green border, green text, flex column).
+  - [ ] Review Component Text Colors (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure they inherit from the `ScreenContainer` where appropriate.
+  - [ ] Update Central Content Window Styling (`CentralContentWindow.tsx`) to confirm the nested "window" border and flex-grow are correct within the `ScreenContainer`.
+  - [ ] Create a test for the `ChatBoxPlaceholder` component.
+  - [ ] Run all tests.
+  - [ ] Commit the changes to Git.
+  - [ ] Push the changes to the remote repository.
+  - [ ] Build the application.
+  - [ ] Deploy the updated build to S3.
+  - [ ] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
 
 ## Matter.js Simulation Module Tasks
 

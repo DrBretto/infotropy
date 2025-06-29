@@ -58,38 +58,41 @@ function App() {
 
   return (
     // Apply global styling and full-screen layout to the main tag
-    // Adjusted padding and removed center items for full spread
-    <main className="min-h-screen h-screen overflow-hidden bg-gray-900 text-gray-100 font-inter p-8 grid grid-rows-[auto_1fr_auto] gap-8">
-      {/* Wrap inner content with motion.div for layout animations - This is the "Screen" area */}
+    // Adjusted padding for the overall layout
+    <main className="min-h-screen h-screen overflow-hidden bg-gray-900 text-gray-100 font-inter p-4 grid grid-rows-[auto_1fr_auto] gap-4">
+      {" "}
+      {/* Reduced padding and gap */}
+      {/* Header is in the top grid row */}
+      <Header layoutState={layoutState} />
+      {/* This motion.div is the ScreenContainer - the central grid item */}
       {/* Apply terminal-like styling: black background, green border, green text */}
       <motion.div
-        className="w-full max-w-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg p-8 flex flex-col space-y-8"
+        className="w-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg p-8 flex flex-col space-y-8 overflow-hidden" // Added overflow-hidden
         layout // Enable layout animations
         transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
       >
-        {/* Pass layoutState and activeModule to components that need to react to it */}
-        <Header layoutState={layoutState} />
+        {/* Content within the ScreenContainer */}
         <DescriptionSection
           activeModule={activeModule} // Pass the activeModule prop
           description={currentDescription} // Pass the current description
           layoutState={layoutState}
         />
-        {/* Pass activeModule state AND handleSelectModule to CentralContentWindow */}
         <CentralContentWindow
           activeModule={activeModule}
           onSelectModule={handleSelectModule}
           layoutState={layoutState}
         />
-        {/* Add the Chat Box Placeholder */}
         <ChatBoxPlaceholder />
-        {/* Pass back button handler and visibility prop, and layoutState */}
-        <NavigationButtons
-          onBackToMenu={handleBackToMenu}
-          showBackButton={showBackButton}
-          layoutState={layoutState}
-        />
-        <Footer layoutState={layoutState} /> {/* Pass layoutState to Footer */}
       </motion.div>
+      {/* NavigationButtons are positioned independently, outside the ScreenContainer */}
+      {/* Pass back button handler and visibility prop, and layoutState */}
+      <NavigationButtons
+        onBackToMenu={handleBackToMenu}
+        showBackButton={showBackButton}
+        layoutState={layoutState}
+      />
+      {/* Footer is in the bottom grid row */}
+      <Footer layoutState={layoutState} /> {/* Pass layoutState to Footer */}
     </main>
   );
 }

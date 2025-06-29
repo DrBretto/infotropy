@@ -1,6 +1,6 @@
 # Aesthetic Guidelines (Terminal-like)
 
-This document outlines the aesthetic guidelines for the Infotropy front-end project, focusing on achieving a terminal-like look and feel, specifically mimicking a Windows desktop screen layout.
+This document outlines the aesthetic guidelines for the Infotropy front-end project, focusing on achieving a terminal-like look and feel, specifically mimicking a Windows desktop screen layout with a prominent, static "single screen" area.
 
 ## Core Aesthetic Principles
 
@@ -16,10 +16,10 @@ This document outlines the aesthetic guidelines for the Infotropy front-end proj
 
 Utilize Tailwind CSS's default color palette, focusing on the following:
 
-- **Backgrounds:** `gray-900` (global), `black` (for the main "Screen" area)
-- **Text:** `gray-100`, `gray-200`, `gray-300`, `gray-400` (for general elements), `green-400` (for primary text within the "Screen" area)
-- **Borders:** `green-500` (for the "Screen" area and nested "window" borders)
-- **Accents:** `blue-400`, `purple-600`, `green-300` (as used in the original `info.md` for interactive elements)
+- **Backgrounds:** `gray-900` (global body background), `black` (for the main "Screen" area - `ScreenContainer`)
+- **Text:** `gray-100`, `gray-200`, `gray-300`, `gray-400` (for elements outside the "Screen" area like Header/Footer), `green-400` (for primary text _within_ the "Screen" area - applied to `ScreenContainer` and inherited by its children)
+- **Borders:** `green-500` (for the static border around the `ScreenContainer` and the border around the `CentralContentWindow`)
+- **Accents:** `blue-400`, `purple-600`, `green-300` (as used in the original `info.md` for interactive elements like the Header title or buttons)
 
 Future color scheme switching can be implemented by leveraging Tailwind's theming capabilities or CSS variables.
 
@@ -31,10 +31,11 @@ Future color scheme switching can be implemented by leveraging Tailwind's themin
 
 ## Layout and Component Appearance
 
-- **Global Container (`main`):** Full viewport height (`min-h-screen`, `h-screen`), no overflow (`overflow-hidden`), global background (`bg-gray-900`), global font and text color (`font-inter`, `text-gray-100`), grid layout for Header, Screen Area, and Footer.
-- **"Screen" Area:** The central `motion.div` within the main grid. Styled with `bg-black`, `border-green-500`, `border-2`, `rounded-lg`, `shadow-lg`, `p-8`, `flex flex-col`, `space-y-8`. Primary text color within this area should be `text-green-400`.
-- **Central Content Window (Nested "Window"):** Styled with `bg-gray-700 bg-opacity-50`, `rounded-md`, `shadow-inner`, `border-green-500`, `border-2`. It should `flex-grow` to fill available space.
-- **Chat Box Placeholder:** Basic styling with a top border (`border-t`, `border-green-500`) and appropriate padding to visually separate it at the bottom of the "Screen" area.
+- **Global Container (`main`):** Full viewport height (`min-h-screen`, `h-screen`), no overflow (`overflow-hidden`), global background (`bg-gray-900`), global font (`font-inter`), grid layout (`grid grid-rows-[auto_1fr_auto]`) for Header, Screen Container, and Footer.
+- **`ScreenContainer`:** The central grid item in `App.tsx`. This container represents the main "single screen". Styled with `bg-black`, `border-green-500`, `border-2`, `rounded-lg`, `shadow-lg`, `p-8`, `flex flex-col`, `space-y-8`. The primary text color for all content within this container is set here using `text-green-400`.
+- **`Central Content Window` (Nested "Window"):** Styled with `bg-gray-700 bg-opacity-50`, `rounded-md`, `shadow-inner`, `border-green-500`, `border-2`. It should `flex-grow` to fill available space within the `ScreenContainer`. Text color within this component will inherit from the `ScreenContainer`.
+- **`ChatBoxPlaceholder`:** Basic styling with a top border (`border-t-2`, `border-green-500`) and appropriate padding (`p-4`) to visually separate it at the bottom of the `ScreenContainer`. Text color will inherit from the `ScreenContainer`.
+- **`Header` and `Footer`:** Positioned outside the `ScreenContainer`. Their text colors (`text-gray-100`, gradient for Header title) are distinct from the green text within the screen.
 - **Other Containers:** Use classes like `bg-gray-800 bg-opacity-70`, `rounded-xl`, `shadow-lg`, `border`, `border-gray-600` for elements outside the main "Screen" area if needed.
 - **Buttons:** Style with accent colors (e.g., `bg-purple-600 hover:bg-purple-700`), text color (`text-white`), padding (`py-2 px-4`), rounded corners (`rounded-md`), and shadows (`shadow-lg`).
 - **Input Fields/Interactive Elements:** Style to fit the dark theme with subtle borders and appropriate text colors.

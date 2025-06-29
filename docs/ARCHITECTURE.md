@@ -1,6 +1,6 @@
 # Project Architecture
 
-This document outlines the architectural design and principles for the Infotropy front-end project. The goal is to create a modular, scalable, and maintainable single-page application designed with future expansion by AI agents in mind, featuring a terminal-like aesthetic.
+This document outlines the architectural design and principles for the Infotropy front-end project. The goal is to create a modular, scalable, and maintainable single-page application designed with future expansion by AI agents in mind, featuring a terminal-like aesthetic with a distinct "single screen" area.
 
 ## Core Principles
 
@@ -10,21 +10,21 @@ This document outlines the architectural design and principles for the Infotropy
 - **Single Source of Truth:** Application state is centralized to avoid inconsistencies.
 - **Convention over Configuration:** Establishing clear patterns for adding new modules and features.
 - **Documentation:** Comprehensive markdown documentation is maintained to guide development (human and AI).
-- **Terminal Aesthetic:** A consistent visual theme mimicking a classic terminal interface.
+- **Terminal Aesthetic:** A consistent visual theme mimicking a classic terminal interface with a prominent "single screen" element.
 
 ## High-Level Structure
 
-The application follows a full-screen, non-scrolling layout with a distinct "screen" area containing the main content and a chat box placeholder, framed by a header and footer.
+The application follows a full-screen, non-scrolling layout with a static "single screen" area filling the space between the header and footer. This "single screen" area contains the main content (description, module/menu, chat box placeholder) and features a static border.
 
 ```mermaid
 graph TD
     App --> Header
-    App --> ScreenArea
+    App --> ScreenContainer
     App --> Footer
 
-    ScreenArea --> DescriptionSection
-    ScreenArea --> CentralContentWindow
-    ScreenArea --> ChatBoxPlaceholder
+    ScreenContainer --> DescriptionSection
+    ScreenContainer --> CentralContentWindow
+    ScreenContainer --> ChatBoxPlaceholder
 
     CentralContentWindow --> ModuleMenu
     CentralContentWindow --> MatterJsSimulation (Conditional)
@@ -33,13 +33,13 @@ graph TD
     App --> NavigationButtons (Fixed Position)
 ```
 
-- **`App` Component:** The root component. Manages the global application state, including the `activeModule` and `layoutState`. This state dictates which components are visible and their styling/positioning for animated transitions. It orchestrates the main layout structure (Header, Screen Area, Footer).
+- **`App` Component:** The root component. Manages the global application state, including the `activeModule` and `layoutState`. This state dictates which components are visible and their styling/positioning for animated transitions. It orchestrates the main grid layout (Header, Screen Container, Footer).
 - **`Header` Component:** Renders at the top of the viewport. Its appearance may change based on the `layoutState`.
 - **`Footer` Component:** Renders at the bottom of the viewport, typically displaying copyright information.
-- **`ScreenArea` (Conceptual):** This represents the main central region of the application, styled to resemble a terminal screen with a black background and colored borders. It acts as a container for the `DescriptionSection`, `CentralContentWindow`, and `ChatBoxPlaceholder`. This is implemented as a `motion.div` within the `App` component's main grid.
-- **`Description Section` Component:** Displays textual content based on the `activeModule`. Positioned within the `ScreenArea`. Its content updates and may animate during layout transitions.
-- **`Central Content Window` Component:** A container component rendered within the `ScreenArea` that displays the active module or the module menu. It is styled as a nested "window" with colored borders and takes up the available space between the Description Section and the Chat Box Placeholder.
-- **`ChatBoxPlaceholder` Component:** A placeholder component rendered at the bottom of the `ScreenArea`. It represents the future chat interface for LLM interaction and navigation.
+- **`ScreenContainer`:** A dedicated container element (implemented as a `div` or `motion.div` in `App.tsx`) that represents the main "single screen" area. It fills the space between the Header and Footer and is styled with the black background, static green border, and primary green text color for its contents. It uses a flex column layout to arrange its children (`DescriptionSection`, `CentralContentWindow`, `ChatBoxPlaceholder`).
+- **`Description Section` Component:** Displays textual content based on the `activeModule`. Positioned within the `ScreenContainer`. Its content updates and may animate during layout transitions.
+- **`Central Content Window` Component:** A container component rendered within the `ScreenContainer` that displays the active module or the module menu. It is styled as a nested "window" with colored borders and takes up the available space between the Description Section and the Chat Box Placeholder.
+- **`ChatBoxPlaceholder` Component:** A placeholder component rendered at the bottom of the `ScreenContainer`. It represents the future chat interface for LLM interaction and navigation.
 - **`Navigation Buttons` Component:** Contains buttons (e.g., "Back to Menu") that allow the user to change the `layoutState` and `activeModule` state in the `App` component. These buttons are positioned independently, likely fixed in a corner.
 - **`Module Menu Component`:** A specific component rendered in the `Central Content Window` when the `layoutState` is 'menu'. It lists available modules and allows users to select them.
 - **`Module Components`:** Individual components representing simulations, features, or other content, rendered within the `Central Content Window` when the `layoutState` is 'module'.

@@ -54,7 +54,7 @@ const CentralContentWindow: React.FC<CentralContentWindowProps> = ({
           animate={{ opacity: 1, y: 0 }} // Animation to state
           exit={{ opacity: 0, y: -10 }} // Animation on exit
           transition={{ duration: 0.3, ease: "easeInOut" }} // Configure transition
-          className="text-center text-gray-400 w-full h-full flex items-center justify-center" // Ensure placeholder fills the container
+          className="text-center w-full h-full flex items-center justify-center" // Removed text-gray-400
         >
           Content for "{activeModule}" Module Placeholder
         </motion.div>
