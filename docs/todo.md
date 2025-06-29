@@ -33,8 +33,9 @@ These tasks focus on setting up the basic project structure, main components, st
 - [x] Write basic unit tests for core components (`App`, `Header`, `Footer`).
 - [x] (Optional) Create `Dockerfile` and `docker-compose.yml` for the development environment.
 - [x] Update documentation files (`docs/README.md`, `docs/ARCHITECTURE.md`, etc.) with any implementation-specific details or decisions made during these tasks.
-- [ ] **Revise Layout Implementation:**
-  - [ ] Adjust Main Layout Structure (`App.tsx`) to introduce a `ScreenContainer` for the static "single screen" area (black background, green border, green text, flex column).
+- [ ] **Revise Layout Implementation (Attempt 2):**
+  - [ ] Adjust Main Layout Structure (`App.tsx`) to remove padding/gap from `main` and introduce a `ScreenContainer` (using the existing `motion.div`) that fills the middle grid row with black background, green border, and green text.
+  - [ ] Adjust Header and Footer Styling to add internal padding.
   - [ ] Review Component Text Colors (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure they inherit from the `ScreenContainer` where appropriate.
   - [ ] Update Central Content Window Styling (`CentralContentWindow.tsx`) to confirm the nested "window" border and flex-grow are correct within the `ScreenContainer`.
   - [ ] Create a test for the `ChatBoxPlaceholder` component.

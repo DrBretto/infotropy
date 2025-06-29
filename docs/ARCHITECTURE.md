@@ -1,6 +1,6 @@
 # Project Architecture
 
-This document outlines the architectural design and principles for the Infotropy front-end project. The goal is to create a modular, scalable, and maintainable single-page application designed with future expansion by AI agents in mind, featuring a terminal-like aesthetic with a distinct "single screen" area.
+This document outlines the architectural design and principles for the Infotropy front-end project. The goal is to create a modular, scalable, and maintainable single-page application designed with future expansion by AI agents in mind, featuring a terminal-like aesthetic with a distinct "single screen" area that fills the available space between the header and footer.
 
 ## Core Principles
 
@@ -10,37 +10,36 @@ This document outlines the architectural design and principles for the Infotropy
 - **Single Source of Truth:** Application state is centralized to avoid inconsistencies.
 - **Convention over Configuration:** Establishing clear patterns for adding new modules and features.
 - **Documentation:** Comprehensive markdown documentation is maintained to guide development (human and AI).
-- **Terminal Aesthetic:** A consistent visual theme mimicking a classic terminal interface with a prominent "single screen" element.
+- **Terminal Aesthetic:** A consistent visual theme mimicking a classic terminal interface with a prominent "single screen" element that occupies the central area.
 
 ## High-Level Structure
 
-The application follows a full-screen, non-scrolling layout with a static "single screen" area filling the space between the header and footer. This "single screen" area contains the main content (description, module/menu, chat box placeholder) and features a static border.
+The application follows a full-screen, non-scrolling layout structured with a CSS Grid. The grid has three rows: a fixed-height header, a flexible middle row that expands to fill the remaining space (the "single screen" area), and a fixed-height footer.
 
 ```mermaid
 graph TD
-    App --> Header
-    App --> ScreenContainer
-    App --> Footer
+    App --> MainGrid (min-h-screen, h-screen, grid grid-rows-[auto_1fr_auto])
+
+    MainGrid --> Header (Grid Row 1, auto height, internal padding)
+    MainGrid --> ScreenContainer (Grid Row 2, 1fr height, fills space, black background, green border, green text, internal padding, flex col)
+    MainGrid --> Footer (Grid Row 3, auto height, internal padding)
 
     ScreenContainer --> DescriptionSection
-    ScreenContainer --> CentralContentWindow
+    ScreenContainer --> CentralContentWindow (flex-grow)
     ScreenContainer --> ChatBoxPlaceholder
 
-    CentralContentWindow --> ModuleMenu
-    CentralContentWindow --> MatterJsSimulation (Conditional)
-    CentralContentWindow --> OtherModules (Conditional)
-
-    App --> NavigationButtons (Fixed Position)
+    App --> NavigationButtons (Fixed Position, outside grid flow)
 ```
 
-- **`App` Component:** The root component. Manages the global application state, including the `activeModule` and `layoutState`. This state dictates which components are visible and their styling/positioning for animated transitions. It orchestrates the main grid layout (Header, Screen Container, Footer).
-- **`Header` Component:** Renders at the top of the viewport. Its appearance may change based on the `layoutState`.
-- **`Footer` Component:** Renders at the bottom of the viewport, typically displaying copyright information.
-- **`ScreenContainer`:** A dedicated container element (implemented as a `div` or `motion.div` in `App.tsx`) that represents the main "single screen" area. It fills the space between the Header and Footer and is styled with the black background, static green border, and primary green text color for its contents. It uses a flex column layout to arrange its children (`DescriptionSection`, `CentralContentWindow`, `ChatBoxPlaceholder`).
-- **`Description Section` Component:** Displays textual content based on the `activeModule`. Positioned within the `ScreenContainer`. Its content updates and may animate during layout transitions.
-- **`Central Content Window` Component:** A container component rendered within the `ScreenContainer` that displays the active module or the module menu. It is styled as a nested "window" with colored borders and takes up the available space between the Description Section and the Chat Box Placeholder.
-- **`ChatBoxPlaceholder` Component:** A placeholder component rendered at the bottom of the `ScreenContainer`. It represents the future chat interface for LLM interaction and navigation.
-- **`Navigation Buttons` Component:** Contains buttons (e.g., "Back to Menu") that allow the user to change the `layoutState` and `activeModule` state in the `App` component. These buttons are positioned independently, likely fixed in a corner.
+- **`App` Component:** The root component. Manages the global application state (`activeModule`, `layoutState`). It renders the main grid structure (`main` tag) and the `NavigationButtons` (positioned fixedly outside the grid flow).
+- **`MainGrid` (Conceptual):** Represents the `main` HTML element in `App.tsx`. It uses a CSS Grid to divide the viewport vertically into three sections: Header, Screen Container, and Footer. It has no external padding or gap, allowing the grid items to touch the viewport edges or each other.
+- **`Header` Component:** Renders in the top grid row. It has internal padding to create space around its content. Its appearance may change based on the `layoutState`.
+- **`Footer` Component:** Renders in the bottom grid row. It has internal padding to create space around its content. Typically displays copyright information.
+- **`ScreenContainer`:** A dedicated container element (implemented as a `motion.div` in `App.tsx`) that occupies the middle grid row (`1fr`), filling all available vertical and horizontal space between the Header and Footer. It is styled with the black background (`bg-black`), a static green border (`border-green-500`, `border-2`) that extends to the edges of its grid cell, and the primary green text color (`text-green-400`) for its contents. It uses a flex column layout (`flex flex-col space-y-8`) with internal padding (`p-8`) to arrange its children.
+- **`Description Section` Component:** Displays textual content based on the `activeModule`. Positioned within the `ScreenContainer`. Its content updates and may animate during layout transitions. Text color inherits from `ScreenContainer`.
+- **`Central Content Window` Component:** A container component rendered within the `ScreenContainer` that displays the active module or the module menu. It is styled as a nested "window" with colored borders (`border-green-500`, `border-2`) and uses `flex-grow` to take up the available space between the Description Section and the Chat Box Placeholder. Text color inherits from `ScreenContainer`.
+- **`ChatBoxPlaceholder` Component:** A placeholder component rendered at the bottom of the `ScreenContainer`. It represents the future chat interface for LLM interaction and navigation. Styled with a top border (`border-t-2`, `border-green-500`) and internal padding (`p-4`). Text color inherits from `ScreenContainer`.
+- **`Navigation Buttons` Component:** Contains buttons (e.g., "Back to Menu") that allow the user to change the `layoutState` and `activeModule` state in the `App` component. These buttons are positioned independently using fixed positioning, outside the main grid flow.
 - **`Module Menu Component`:** A specific component rendered in the `Central Content Window` when the `layoutState` is 'menu'. It lists available modules and allows users to select them.
 - **`Module Components`:** Individual components representing simulations, features, or other content, rendered within the `Central Content Window` when the `layoutState` is 'module'.
 - **`State Management`:** Centralized in `App` to manage `activeModule` and `layoutState`.

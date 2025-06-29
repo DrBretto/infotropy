@@ -11,12 +11,14 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ layoutState }) => {
   return (
     // Use motion.header for animations and apply dynamic styling
+    // Added internal padding and removed bottom margin
     <motion.header
-      className={`w-full ${
+      className={`w-full p-4 ${
+        // Added p-4 for internal padding
         // Ensure header takes full width
         layoutState === "module"
-          ? "flex items-center justify-between mb-4" // Layout for module state (title left, buttons right)
-          : "text-center space-y-2 mb-8 flex flex-col items-center" // Layout for menu state
+          ? "flex items-center justify-between" // Layout for module state (title left, buttons right), removed mb-4
+          : "text-center space-y-2 flex flex-col items-center" // Layout for menu state, removed mb-8
       }`}
       layout // Enable layout animations
       transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition

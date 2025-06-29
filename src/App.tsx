@@ -58,16 +58,17 @@ function App() {
 
   return (
     // Apply global styling and full-screen layout to the main tag
-    // Adjusted padding for the overall layout
-    <main className="min-h-screen h-screen overflow-hidden bg-gray-900 text-gray-100 font-inter p-4 grid grid-rows-[auto_1fr_auto] gap-4">
+    // Removed padding and gap to allow ScreenContainer to fill the space
+    <main className="min-h-screen h-screen overflow-hidden bg-gray-900 text-gray-100 font-inter grid grid-rows-[auto_1fr_auto]">
       {" "}
-      {/* Reduced padding and gap */}
+      {/* Removed p-4 and gap-4 */}
       {/* Header is in the top grid row */}
       <Header layoutState={layoutState} />
       {/* This motion.div is the ScreenContainer - the central grid item */}
       {/* Apply terminal-like styling: black background, green border, green text */}
+      {/* Ensure it fills the grid cell */}
       <motion.div
-        className="w-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg p-8 flex flex-col space-y-8 overflow-hidden" // Added overflow-hidden
+        className="w-full h-full bg-black text-green-400 border-green-500 border-2 rounded-lg shadow-lg p-8 flex flex-col space-y-8 overflow-hidden" // Changed max-w-full to h-full
         layout // Enable layout animations
         transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
       >

@@ -1,6 +1,6 @@
 # Aesthetic Guidelines (Terminal-like)
 
-This document outlines the aesthetic guidelines for the Infotropy front-end project, focusing on achieving a terminal-like look and feel, specifically mimicking a Windows desktop screen layout with a prominent, static "single screen" area.
+This document outlines the aesthetic guidelines for the Infotropy front-end project, focusing on achieving a terminal-like look and feel, specifically mimicking a Windows desktop screen layout with a prominent, static "single screen" area that fills the available space between the header and footer.
 
 ## Core Aesthetic Principles
 
@@ -31,11 +31,13 @@ Future color scheme switching can be implemented by leveraging Tailwind's themin
 
 ## Layout and Component Appearance
 
-- **Global Container (`main`):** Full viewport height (`min-h-screen`, `h-screen`), no overflow (`overflow-hidden`), global background (`bg-gray-900`), global font (`font-inter`), grid layout (`grid grid-rows-[auto_1fr_auto]`) for Header, Screen Container, and Footer.
-- **`ScreenContainer`:** The central grid item in `App.tsx`. This container represents the main "single screen". Styled with `bg-black`, `border-green-500`, `border-2`, `rounded-lg`, `shadow-lg`, `p-8`, `flex flex-col`, `space-y-8`. The primary text color for all content within this container is set here using `text-green-400`.
-- **`Central Content Window` (Nested "Window"):** Styled with `bg-gray-700 bg-opacity-50`, `rounded-md`, `shadow-inner`, `border-green-500`, `border-2`. It should `flex-grow` to fill available space within the `ScreenContainer`. Text color within this component will inherit from the `ScreenContainer`.
-- **`ChatBoxPlaceholder`:** Basic styling with a top border (`border-t-2`, `border-green-500`) and appropriate padding (`p-4`) to visually separate it at the bottom of the `ScreenContainer`. Text color will inherit from the `ScreenContainer`.
-- **`Header` and `Footer`:** Positioned outside the `ScreenContainer`. Their text colors (`text-gray-100`, gradient for Header title) are distinct from the green text within the screen.
+- **Global Container (`main`):** Full viewport height (`min-h-screen`, `h-screen`), no overflow (`overflow-hidden`), global background (`bg-gray-900`), global font (`font-inter`), grid layout (`grid grid-rows-[auto_1fr_auto]`) for Header, Screen Container, and Footer. **Crucially, this container has no padding or gap** to allow the central `ScreenContainer` to fill the available space completely.
+- **`Header` and `Footer`:** Positioned in the top and bottom grid rows respectively. They have **internal padding** (e.g., `p-4`) to create space around their content, preventing it from touching the viewport edges or the `ScreenContainer` border. Their text colors (`text-gray-100`, gradient for Header title) are distinct from the green text within the screen.
+- **`ScreenContainer`:** The central grid item in `App.tsx`. This container represents the main "single screen". It is styled with `w-full h-full` to fill its grid cell, `bg-black`, `border-green-500`, `border-2`, `rounded-lg`, `shadow-lg`. It has **internal padding** (`p-8`) to create space between its border and its children. It uses a flex column layout (`flex flex-col space-y-8`) to arrange its children. The primary text color for all content within this container is set here using `text-green-400`.
+- **`Description Section` Component:** Displays textual content based on the `activeModule`. Positioned within the `ScreenContainer`. Its content updates and may animate during layout transitions. Text color inherits from `ScreenContainer`.
+- **`Central Content Window` (Nested "Window"):** A container component rendered within the `ScreenContainer` that displays the active module or the module menu. It is styled with `bg-gray-700 bg-opacity-50`, `rounded-md`, `shadow-inner`, `border-green-500`, `border-2`. It uses `flex-grow` to take up the available space between the Description Section and the Chat Box Placeholder. Text color inherits from `ScreenContainer`.
+- **`ChatBoxPlaceholder` Component:** A placeholder component rendered at the bottom of the `ScreenContainer`. It represents the future chat interface for LLM interaction and navigation. Styled with a top border (`border-t-2`, `border-green-500`) and internal padding (`p-4`). Text color inherits from `ScreenContainer`.
+- **`Navigation Buttons` Component:** Contains buttons (e.g., "Back to Menu") that allow the user to change the `layoutState` and `activeModule` state in the `App` component. These buttons are positioned independently using fixed positioning, outside the main grid flow.
 - **Other Containers:** Use classes like `bg-gray-800 bg-opacity-70`, `rounded-xl`, `shadow-lg`, `border`, `border-gray-600` for elements outside the main "Screen" area if needed.
 - **Buttons:** Style with accent colors (e.g., `bg-purple-600 hover:bg-purple-700`), text color (`text-white`), padding (`py-2 px-4`), rounded corners (`rounded-md`), and shadows (`shadow-lg`).
 - **Input Fields/Interactive Elements:** Style to fit the dark theme with subtle borders and appropriate text colors.
