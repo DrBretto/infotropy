@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ layoutState }) => {
         className={`font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 drop-shadow-lg ${
           layoutState === "module"
             ? "text-xl sm:text-2xl" // Smaller text size for module state
-            : "text-4xl sm:text-5xl" // Larger text size for menu state
+            : "text-2xl sm:text-3xl" // Smaller text size for menu state (Adjusted)
         }`}
         layout // Enable layout animations
         transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition

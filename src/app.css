@@ -9,6 +9,7 @@ main {
   height: 100vh;
   overflow: hidden;
   /* No padding or gap here */
+  background-color: black; /* Set global background to black */
 }
 
 /* Standard CSS for the ScreenContainer */

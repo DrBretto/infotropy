@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ layoutState }) => {
       transition={{ duration: 0.5, ease: "easeInOut" }} // Configure transition
     >
       <p>
-        © 2025 Infotropy. All rights reserved. An independent exploration of
+        © 2025 drbretto. All rights reserved. An independent exploration of
         fundamental patterns.
       </p>
     </motion.footer>

@@ -16,7 +16,8 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
   // Placeholder text - will be replaced with actual content and state logic later
   const mainIntroText = (
     <>
-      <h2 className="text-blue-300 text-2xl sm:text-3xl font-bold mb-4">
+      {/* Removed explicit text-blue-300 to inherit green from ScreenContainer */}
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4">
         A New Lens for Reality
       </h2>
       {/* Remove explicit green text color - will inherit from parent ScreenContainer */}

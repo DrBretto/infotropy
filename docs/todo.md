@@ -33,7 +33,7 @@ These tasks focus on setting up the basic project structure, main components, st
 - [x] Write basic unit tests for core components (`App`, `Header`, `Footer`).
 - [x] (Optional) Create `Dockerfile` and `docker-compose.yml` for the development environment.
 - [x] Update documentation files (`docs/README.md`, `docs/ARCHITECTURE.md`, etc.) with any implementation-specific details or decisions made during these tasks.
-- [ ] **Revise Layout Implementation (Attempt 3):** Needs revision.
+- [x] **Revise Layout Implementation (Attempt 3):** Needs revision.
   - [x] Adjust Main Layout Structure (`App.tsx`) to remove padding/gap from `main` and remove internal padding from the `ScreenContainer`.
   - [x] Adjust Header and Footer Styling to add internal padding.
   - [x] Review Component Text Colors (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure they inherit from the `ScreenContainer` where appropriate.
@@ -45,7 +45,7 @@ These tasks focus on setting up the basic project structure, main components, st
   - [x] Build the application.
   - [x] Deploy the updated build to S3.
   - [x] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
-- [ ] **Revise Layout Implementation (Attempt 4):** Needs revision.
+- [x] **Revise Layout Implementation (Attempt 4):** Needs revision.
   - [x] Adjust Main Layout Structure (`App.tsx`) to remove `flex flex-col space-y-8` and `p-8` from `ScreenContainer` and add a new inner `div` with `w-full h-full p-8 flex flex-col space-y-8`.
   - [x] Review Children Component Styling (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to remove any padding added in Attempt 3.
   - [x] Run all tests.
@@ -54,11 +54,22 @@ These tasks focus on setting up the basic project structure, main components, st
   - [x] Build the application.
   - [x] Deploy the updated build to S3.
   - [x] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
-- [ ] **Revise Layout Implementation (Attempt 5 - Standard CSS):**
-  - [ ] Define Standard CSS rules for the `main` tag (grid layout, no padding/gap).
-  - [ ] Define Standard CSS rules for the `ScreenContainer` class (fill space, background, border, text color, box-sizing).
-  - [ ] Adjust Main Layout Structure (`App.tsx`) to remove Tailwind grid/layout/color classes from `main` and `ScreenContainer`, add the `screen-container` class to `ScreenContainer`, and add the new inner `div` with Tailwind padding/flex classes.
-  - [ ] Review Children Component Styling (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure no conflicting padding classes.
+- [x] **Revise Layout Implementation (Attempt 5 - Standard CSS):** Needs revision.
+  - [x] Define Standard CSS rules for the `main` tag (grid layout, no padding/gap).
+  - [x] Define Standard CSS rules for the `ScreenContainer` class (fill space, background, border, text color, box-sizing).
+  - [x] Adjust Main Layout Structure (`App.tsx`) to remove Tailwind grid/layout/color classes from `main` and `ScreenContainer`, add the `screen-container` class to `ScreenContainer`, and add the new inner `div` with Tailwind padding/flex classes.
+  - [x] Review Children Component Styling (DescriptionSection, CentralContentWindow, ChatBoxPlaceholder) to ensure no conflicting padding classes.
+  - [x] Run all tests.
+  - [x] Commit the changes to Git.
+  - [x] Push the changes to the remote repository.
+  - [x] Build the application.
+  - [x] Deploy the updated build to S3.
+  - [x] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
+- [ ] **Revise Layout Implementation (Attempt 6 - Final Tweaks):**
+  - [ ] Set global background to black using standard CSS on the `main` tag.
+  - [ ] Make the header text smaller using Tailwind classes.
+  - [ ] Change the footer copyright text to "drbretto".
+  - [ ] Review component styling for text color inheritance with the global black background.
   - [ ] Run all tests.
   - [ ] Commit the changes to Git.
   - [ ] Push the changes to the remote repository.
