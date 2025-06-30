@@ -27,7 +27,7 @@ const MaxwellsDemon: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const { Engine, Render, World, Bodies, Runner, Events } = Matter;
+    const { Engine, Render, World, Bodies, Runner, Events, Body } = Matter; // Import Body
 
     // Create engine
     const engine = Engine.create();
@@ -131,14 +131,21 @@ const MaxwellsDemon: React.FC = () => {
       const y =
         Math.random() * (canvas.offsetHeight - 2 * wallThickness) +
         wallThickness;
-      balls.push(
-        Bodies.circle(x, y, ballRadius, {
-          restitution: 1,
-          friction: 0,
-          frictionAir: 0,
-          label: "ball", // Add 'ball' label
-        })
-      );
+      const ball = Bodies.circle(x, y, ballRadius, {
+        restitution: 1,
+        friction: 0,
+        frictionAir: 0,
+        label: "ball", // Add 'ball' label
+        render: {
+          fillStyle: "#ffffff", // Set ball color to white
+        },
+      });
+      // Add initial random velocity
+      Body.setVelocity(ball, {
+        x: (Math.random() - 0.5) * 5, // Random velocity between -2.5 and 2.5
+        y: (Math.random() - 0.5) * 5, // Random velocity between -2.5 and 2.5
+      });
+      balls.push(ball);
     }
 
     // Add walls, barrier, and balls to the world initially
