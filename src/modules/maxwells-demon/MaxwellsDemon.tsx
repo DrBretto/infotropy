@@ -110,7 +110,7 @@ const MaxwellsDemon: React.FC = () => {
 
     // Create the door
     const doorWidth = barrierThickness;
-    const doorHeight = 100; // Example height for the door
+    const doorHeight = 100 * 2.5; // Increased door height
     const door = Bodies.rectangle(
       canvas.offsetWidth / 2,
       canvas.offsetHeight / 2,
@@ -123,6 +123,7 @@ const MaxwellsDemon: React.FC = () => {
     // Create balls
     const numberOfBalls = 20;
     const ballRadius = 10;
+    const initialSpeed = 10; // Doubled initial speed
     const balls = [];
     for (let i = 0; i < numberOfBalls; i++) {
       const x =
@@ -142,8 +143,8 @@ const MaxwellsDemon: React.FC = () => {
       });
       // Add initial random velocity
       Body.setVelocity(ball, {
-        x: (Math.random() - 0.5) * 5, // Random velocity between -2.5 and 2.5
-        y: (Math.random() - 0.5) * 5, // Random velocity between -2.5 and 2.5
+        x: (Math.random() - 0.5) * initialSpeed, // Random velocity between -initialSpeed/2 and initialSpeed/2
+        y: (Math.random() - 0.5) * initialSpeed, // Random velocity between -initialSpeed/2 and initialSpeed/2
       });
       balls.push(ball);
     }
