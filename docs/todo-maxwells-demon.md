@@ -14,9 +14,9 @@ This checklist tracks the implementation tasks for the Maxwell's Demon module. C
 - [x] Configure the Matter.js engine to disable gravity.
 - [x] Create static rectangular bodies for the arena walls (top, bottom, left, right).
 - [x] Create a static rectangular body for the central barrier.
-- [x] Create a static rectangular body for the door within the central barrier.
+- [x] Create a static rectangular body for the door within the central barrier, with increased height.
 - [x] Implement state variables for `ballBounceCount`, `leftSideCount`, `rightSideCount`, and `isDoorOpen`. Initialize `ballBounceCount` to 0, `leftSideCount` and `rightSideCount` based on initial ball distribution, and `isDoorOpen` to `false`.
-- [x] Generate 20 circular bodies (balls) with appropriate properties and random initial positions within the arena.
+- [x] Generate 20 circular bodies (balls) with appropriate properties, random initial positions, and doubled initial velocities. Set their render color to white.
 - [x] Add all static and dynamic bodies to the Matter.js `World`.
 - [x] Implement the simulation loop using `Matter.Engine.run()` or a `requestAnimationFrame` loop with `Matter.Engine.update()`.
 - [x] Implement collision detection using `Matter.Events.on(engine, 'collisionStart', ...)` to specifically track ball-to-ball collisions and increment `ballBounceCount`.
@@ -24,9 +24,9 @@ This checklist tracks the implementation tasks for the Maxwell's Demon module. C
 - [x] Render two background `div` elements behind the canvas for dynamic shading.
 - [x] Implement logic to calculate the ball distribution imbalance based on `leftSideCount` and `rightSideCount`.
 - [x] Dynamically update the background color of the shading `div`s based on the imbalance, using dark mode friendly red and blue shades that fade with the degree of imbalance.
-- [x] Implement the `toggleDoor()` function to switch the `isDoorOpen` state.
-- [x] Use a `useEffect` hook dependent on `isDoorOpen` to add or remove the door body from the Matter.js `World`.
-- [x] Add a button to the component's UI that calls `toggleDoor()`. Update the button text based on `isDoorOpen`.
+- [ ] Remove the door toggle button from the UI.
+- [ ] Implement click detection on the Matter.js render instance to toggle the door state when the door body is clicked.
+- [ ] Adjust the layout and styling of the simulation area and UI elements to ensure everything fits properly within the `CentralContentWindow` and the ball counts are visible.
 - [x] Display the `ballBounceCount` state in the component's UI.
 - [x] Apply Tailwind CSS classes for component styling, adhering to the terminal aesthetic.
 - [x] Add Standard CSS rules for the dynamic background shading elements.
@@ -35,7 +35,7 @@ This checklist tracks the implementation tasks for the Maxwell's Demon module. C
 - [x] Modify the state logic in [`src/App.tsx`](src/App.tsx) to render the `MaxwellsDemon` component when selected.
 - [x] Update the `DescriptionSection` content logic in [`src/App.tsx`](src/App.tsx) to display the description from [`docs/modules/maxwells-demon.md`](docs/modules/maxwells-demon.md).
 - [ ] Write unit tests for the ball counting and background color calculation logic.
-- [ ] Write integration tests for the `MaxwellsDemon` component, including testing the door button functionality.
+- [ ] Write integration tests for the `MaxwellsDemon` component, including testing the clickable door functionality.
 - [ ] Ensure all tests pass.
 - [ ] Update [`docs/modules/maxwells-demon.md`](docs/modules/maxwells-demon.md) with any implementation details.
 - [x] Update [`docs/todo-maxwells-demon.md`](docs/todo-maxwells-demon.md) by checking off completed items.

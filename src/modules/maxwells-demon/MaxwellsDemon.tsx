@@ -27,7 +27,17 @@ const MaxwellsDemon: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const { Engine, Render, World, Bodies, Runner, Events, Body } = Matter; // Import Body
+    const {
+      Engine,
+      Render,
+      World,
+      Bodies,
+      Runner,
+      Events,
+      Body,
+      Mouse,
+      MouseConstraint,
+    } = Matter; // Import Mouse and MouseConstraint
 
     // Create engine
     const engine = Engine.create();
@@ -157,6 +167,23 @@ const MaxwellsDemon: React.FC = () => {
       World.add(engine.world, door);
     }
 
+    // Add mouse control for clicking
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false,
+        },
+      },
+    });
+
+    World.add(engine.world, mouseConstraint);
+
+    // Enable mouse interaction on the render
+    render.mouse = mouse;
+
     // Collision detection for ball bounces
     Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
@@ -168,6 +195,16 @@ const MaxwellsDemon: React.FC = () => {
           setBallBounceCount((prevCount) => prevCount + 1);
         }
       });
+    });
+
+    // Click detection on the door
+    Events.on(mouseConstraint, "mousedown", (event) => {
+      const mousePoint = event.mouse.position;
+      const clickedBodies = Matter.Query.point(engine.world.bodies, mousePoint);
+
+      if (clickedBodies.some((body) => body.label === "door")) {
+        toggleDoor();
+      }
     });
 
     // Track ball positions and update counts
@@ -196,7 +233,7 @@ const MaxwellsDemon: React.FC = () => {
       render.canvas.remove();
       render.textures = {}; // Clear textures to prevent memory leaks
     };
-  }, []); // Empty dependency array means this effect runs once on mount and cleans up on unmount
+  }, [isDoorOpen, toggleDoor]); // Add isDoorOpen and toggleDoor to dependencies
 
   // Effect to update background color based on ball counts
   useEffect(() => {
@@ -247,19 +284,6 @@ const MaxwellsDemon: React.FC = () => {
     }
   }, [leftSideCount, rightSideCount]); // Rerun effect when counts change
 
-  // Effect to add or remove the door based on isDoorOpen state
-  useEffect(() => {
-    const engine = engineRef.current;
-    const door = doorRef.current;
-    if (!engine || !door) return;
-
-    if (isDoorOpen) {
-      Matter.World.remove(engine.world, door);
-    } else {
-      Matter.World.add(engine.world, door);
-    }
-  }, [isDoorOpen]); // Rerun effect when isDoorOpen changes
-
   // Resize handling will be added later
 
   return (
@@ -283,16 +307,13 @@ const MaxwellsDemon: React.FC = () => {
       ></div>
       <canvas ref={canvasRef} className="w-full h-full"></canvas>
       {/* UI elements (button, bounce count) */}
-      <div className="absolute bottom-4 left-4 z-10 text-green-400">
+      <div className="absolute top-4 left-4 z-10 text-green-400">
+        {" "}
+        {/* Adjusted positioning */}
         <p>Ball Bounces: {ballBounceCount}</p>
         <p>Left Side: {leftSideCount}</p>
         <p>Right Side: {rightSideCount}</p>
-        <button
-          onClick={toggleDoor}
-          className="mt-2 px-4 py-2 bg-green-500 text-black rounded"
-        >
-          {isDoorOpen ? "Close Door" : "Open Door"}
-        </button>
+        {/* Removed door toggle button */}
       </div>
     </motion.div>
   );

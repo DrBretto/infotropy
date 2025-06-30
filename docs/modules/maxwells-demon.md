@@ -12,14 +12,14 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 - **Functionality:**
   - Initialize and manage a Matter.js engine, renderer, and world.
   - Create static boundaries and a central barrier with a controllable door.
-  - Generate and manage dynamic circular bodies (balls).
+  - Generate and manage dynamic circular bodies (balls) with initial random velocities.
   - Disable gravity for continuous bouncing.
   - Detect and count ball-to-ball collisions.
   - Track the number of balls on each side of the central barrier.
   - Dynamically shade the background based on ball distribution imbalance.
-  - Provide a UI control to open and close the door.
+  - Implement clickable door control.
   - Display the total ball bounce count.
-  - Handle canvas resizing.
+  - Handle canvas resizing and ensure the simulation fits the window.
   - Clean up Matter.js instance on component unmount.
 
 ## Component Structure
@@ -41,9 +41,9 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 8.  Configure the Matter.js engine to disable gravity.
 9.  Create static rectangular bodies for the arena walls (top, bottom, left, right).
 10. Create a static rectangular body for the central barrier.
-11. Create a static rectangular body for the door within the central barrier.
+11. Create a static rectangular body for the door within the central barrier, with increased height.
 12. Implement state variables for `ballBounceCount`, `leftSideCount`, `rightSideCount`, and `isDoorOpen`. Initialize `ballBounceCount` to 0, `leftSideCount` and `rightSideCount` based on initial ball distribution, and `isDoorOpen` to `false`.
-13. Generate 20 circular bodies (balls) with appropriate properties and random initial positions within the arena.
+13. Generate 20 circular bodies (balls) with appropriate properties, random initial positions, and doubled initial velocities. Set their render color to white.
 14. Add all static and dynamic bodies to the Matter.js `World`.
 15. Implement the simulation loop using `Matter.Engine.run()` or a `requestAnimationFrame` loop with `Matter.Engine.update()`.
 16. Implement collision detection using `Matter.Events.on(engine, 'collisionStart', ...)` to specifically track ball-to-ball collisions and increment `ballBounceCount`.
@@ -51,9 +51,9 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 18. Render two background `div` elements behind the canvas for dynamic shading.
 19. Implement logic to calculate the ball distribution imbalance based on `leftSideCount` and `rightSideCount`.
 20. Dynamically update the background color of the shading `div`s based on the imbalance, using dark mode friendly red and blue shades that fade with the degree of imbalance.
-21. Implement the `toggleDoor()` function to switch the `isDoorOpen` state.
-22. Use a `useEffect` hook dependent on `isDoorOpen` to add or remove the door body from the Matter.js `World`.
-23. Add a button to the component's UI that calls `toggleDoor()`. Update the button text based on `isDoorOpen`.
+21. Remove the door toggle button from the UI.
+22. Implement click detection on the Matter.js render instance to toggle the door state when the door body is clicked.
+23. Adjust the layout and styling of the simulation area and UI elements to ensure everything fits properly within the `CentralContentWindow` and the ball counts are visible.
 24. Display the `ballBounceCount` state in the component's UI.
 25. Apply Tailwind CSS classes for component styling, adhering to the terminal aesthetic.
 26. Add Standard CSS rules for the dynamic background shading elements.
@@ -62,7 +62,7 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 29. Modify the state logic in [`src/App.tsx`](src/App.tsx) to render the `MaxwellsDemon` component when selected.
 30. Update the `DescriptionSection` content logic in [`src/App.tsx`](src/App.tsx) to display the description from [`docs/modules/maxwells-demon.md`](docs/modules/maxwells-demon.md).
 31. Write unit tests for the ball counting and background color calculation logic.
-32. Write integration tests for the `MaxwellsDemon` component, including testing the door button functionality.
+32. Write integration tests for the `MaxwellsDemon` component, including testing the clickable door functionality.
 33. Ensure all tests pass.
 34. Update [`docs/modules/maxwells-demon.md`](docs/modules/maxwells-demon.md) with any implementation details.
 35. Update [`docs/todo-maxwells-demon.md`](docs/todo-maxwells-demon.md) by checking off completed items.
@@ -76,21 +76,22 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 The core simulation logic for the Maxwell's Demon module has been implemented in [`src/modules/maxwells-demon/MaxwellsDemon.tsx`](src/modules/maxwells-demon/MaxwellsDemon.tsx). This includes:
 
 - Setting up the Matter.js engine, renderer, and world with gravity disabled.
-- Creating the arena walls, central barrier, and the door.
-- Generating and adding 20 balls to the simulation.
+- Creating the arena walls, central barrier, and the door with increased height.
+- Generating and adding 20 balls to the simulation with initial random velocities and white color.
 - Implementing collision detection to count ball-to-ball bounces.
 - Tracking the number of balls on the left and right sides of the barrier.
 - Implementing logic to dynamically update the background color of two overlay `div` elements based on the ball distribution imbalance, using interpolated dark mode friendly red and blue shades.
-- Adding a button to toggle the door state and displaying the ball bounce count in the UI.
-- Integrating the module into the application by adding it to the `ModuleMenu` and updating the rendering logic in `App.tsx` and `CentralContentWindow.tsx`.
-- Added basic Framer Motion animations for the module's entry and exit.
+- The door toggle button has been added to the UI but needs to be removed and replaced with clickable door functionality.
+- The layout and positioning of UI elements need adjustment to ensure visibility and proper fit within the window.
+- The module has been integrated into the application menu and rendering logic in `App.tsx` and `CentralContentWindow.tsx`.
+- Basic Framer Motion animations for the module's entry and exit have been added.
 
 Unit and integration tests have been started in [`src/modules/maxwells-demon/MaxwellsDemon.test.tsx`](src/modules/maxwells-demon/MaxwellsDemon.test.tsx), including tests for ball bounce counting, background color updates, and door toggling. However, there are currently TypeScript errors in the test file related to the mocking of Matter.js types that need to be resolved.
 
 ## Testing Strategy
 
 - **Unit Tests:** Focus on pure functions and logic, such as the calculation of background colors based on ball counts and the logic for incrementing the bounce counter.
-- **Integration Tests:** Test the `MaxwellsDemon` component's interaction with the UI, specifically the door button toggling and the display of the bounce count. Mock the Matter.js engine to isolate component testing from the physics simulation itself.
+- **Integration Tests:** Test the `MaxwellsDemon` component's interaction with the UI, specifically the clickable door functionality and the display of the bounce count. Mock the Matter.js engine to isolate component testing from the physics simulation itself.
 
 ## Animation Considerations
 
@@ -112,7 +113,7 @@ graph TD
     CentralContentWindow -- Renders based on state --> MaxwellsDemonModule
 
     MaxwellsDemonModule --> SimulationCanvas
-    MaxwellsDemonModule --> DoorButton
+    MaxwellsDemonModule --> ClickableDoor (New)
     MaxwellsDemonModule --> BounceCountDisplay
     MaxwellsDemonModule --> BackgroundShading (Dynamic CSS)
 
@@ -123,7 +124,7 @@ graph TD
     BallPositions -- Updates --> BallSideCountsState
     BallSideCountsState -- Updates --> BackgroundShading
 
-    DoorButton -- Triggers --> ToggleDoorState
+    ClickableDoor -- Triggers --> ToggleDoorState
     ToggleDoorState -- Modifies --> MatterJsEngine (add/remove door body)
 
     ModuleMenu -- Selects Module --> App (Updates state)
