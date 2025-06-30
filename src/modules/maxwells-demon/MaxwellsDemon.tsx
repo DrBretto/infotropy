@@ -25,7 +25,8 @@ const MaxwellsDemon: React.FC = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = canvas?.parentElement; // Get the parent container
+    if (!canvas || !container) return;
 
     const {
       Engine,
@@ -37,6 +38,7 @@ const MaxwellsDemon: React.FC = () => {
       Body,
       Mouse,
       MouseConstraint,
+      Query, // Import Query
     } = Matter; // Import Mouse and MouseConstraint
 
     // Create engine
@@ -52,8 +54,8 @@ const MaxwellsDemon: React.FC = () => {
       canvas: canvas,
       engine: engine,
       options: {
-        width: canvas.offsetWidth,
-        height: canvas.offsetHeight,
+        width: container.offsetWidth, // Use container dimensions
+        height: container.offsetHeight, // Use container dimensions
         wireframes: false, // Use filled shapes
         background: "transparent", // Use CSS for background
         pixelRatio: window.devicePixelRatio,
@@ -75,46 +77,46 @@ const MaxwellsDemon: React.FC = () => {
     const walls = [
       // Top wall
       Bodies.rectangle(
-        canvas.offsetWidth / 2,
+        container.offsetWidth / 2, // Use container dimensions
         wallThickness / 2,
-        canvas.offsetWidth,
+        container.offsetWidth, // Use container dimensions
         wallThickness,
         { isStatic: true }
       ),
       // Bottom wall
       Bodies.rectangle(
-        canvas.offsetWidth / 2,
-        canvas.offsetHeight - wallThickness / 2,
-        canvas.offsetWidth,
+        container.offsetWidth / 2, // Use container dimensions
+        container.offsetHeight - wallThickness / 2, // Use container dimensions
+        container.offsetWidth, // Use container dimensions
         wallThickness,
         { isStatic: true }
       ),
       // Left wall
       Bodies.rectangle(
         wallThickness / 2,
-        canvas.offsetHeight / 2,
+        container.offsetHeight / 2, // Use container dimensions
         wallThickness,
-        canvas.offsetHeight,
+        container.offsetHeight, // Use container dimensions
         { isStatic: true }
       ),
       // Right wall
       Bodies.rectangle(
-        canvas.offsetWidth - wallThickness / 2,
-        canvas.offsetHeight / 2,
+        container.offsetWidth - wallThickness / 2, // Use container dimensions
+        container.offsetHeight / 2, // Use container dimensions
         wallThickness,
-        canvas.offsetHeight,
+        container.offsetHeight, // Use container dimensions
         { isStatic: true }
       ),
     ];
 
     // Create central barrier
     const barrierThickness = 20;
-    const centralBarrierX = canvas.offsetWidth / 2;
+    const centralBarrierX = container.offsetWidth / 2; // Use container dimensions
     const centralBarrier = Bodies.rectangle(
       centralBarrierX,
-      canvas.offsetHeight / 2,
+      container.offsetHeight / 2, // Use container dimensions
       barrierThickness,
-      canvas.offsetHeight,
+      container.offsetHeight, // Use container dimensions
       { isStatic: true }
     );
 
@@ -122,8 +124,8 @@ const MaxwellsDemon: React.FC = () => {
     const doorWidth = barrierThickness;
     const doorHeight = 100 * 2.5; // Increased door height
     const door = Bodies.rectangle(
-      canvas.offsetWidth / 2,
-      canvas.offsetHeight / 2,
+      container.offsetWidth / 2, // Use container dimensions
+      container.offsetHeight / 2, // Use container dimensions
       doorWidth,
       doorHeight,
       { isStatic: true, label: "door" } // Add a label to identify the door
@@ -137,10 +139,10 @@ const MaxwellsDemon: React.FC = () => {
     const balls = [];
     for (let i = 0; i < numberOfBalls; i++) {
       const x =
-        Math.random() * (canvas.offsetWidth - 2 * wallThickness) +
+        Math.random() * (container.offsetWidth - 2 * wallThickness) + // Use container dimensions
         wallThickness;
       const y =
-        Math.random() * (canvas.offsetHeight - 2 * wallThickness) +
+        Math.random() * (container.offsetHeight - 2 * wallThickness) + // Use container dimensions
         wallThickness;
       const ball = Bodies.circle(x, y, ballRadius, {
         restitution: 1,
@@ -190,7 +192,7 @@ const MaxwellsDemon: React.FC = () => {
       pairs.forEach((pair) => {
         const { bodyA, bodyB } = pair;
 
-        // Check if both bodies are balls
+        // Check if both bodies are balls (already implemented)
         if (bodyA.label === "ball" && bodyB.label === "ball") {
           setBallBounceCount((prevCount) => prevCount + 1);
         }
@@ -200,8 +202,10 @@ const MaxwellsDemon: React.FC = () => {
     // Click detection on the door
     Events.on(mouseConstraint, "mousedown", (event) => {
       const mousePoint = event.mouse.position;
-      const clickedBodies = Matter.Query.point(engine.world.bodies, mousePoint);
+      // Use Query.point to find bodies at the mouse position
+      const clickedBodies = Query.point(engine.world.bodies, mousePoint);
 
+      // Check if the clicked body is the door
       if (clickedBodies.some((body) => body.label === "door")) {
         toggleDoor();
       }
@@ -288,7 +292,7 @@ const MaxwellsDemon: React.FC = () => {
 
   return (
     <motion.div
-      className="relative w-full h-full"
+      className="relative w-full h-full overflow-hidden" // Added overflow-hidden
       initial={{ opacity: 0 }} // Initial animation state
       animate={{ opacity: 1 }} // Animation to state
       exit={{ opacity: 0 }} // Animation on exit
