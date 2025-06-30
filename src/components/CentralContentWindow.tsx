@@ -3,6 +3,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence
 import ModuleMenu from "./ModuleMenu"; // Import the ModuleMenu component
 import MatterJsSimulation from "../modules/matterjs-simulation/MatterJsSimulation"; // Import the MatterJsSimulation component
+import MaxwellsDemon from "../modules/maxwells-demon/MaxwellsDemon"; // Import the MaxwellsDemon component
 
 interface CentralContentWindowProps {
   activeModule: string | null; // null for the main menu/intro
@@ -43,6 +44,20 @@ const CentralContentWindow: React.FC<CentralContentWindowProps> = ({
           className="w-full h-full" // Ensure simulation fills the container
         >
           <MatterJsSimulation />
+        </motion.div>
+      );
+    } else if (activeModule === "maxwells-demon") {
+      // Render Maxwell's Demon module
+      return (
+        <motion.div
+          key="maxwells-demon" // Unique key for animation
+          initial={{ opacity: 0, y: 10 }} // Initial state
+          animate={{ opacity: 1, y: 0 }} // Animation to state
+          exit={{ opacity: 0, y: -10 }} // Animation on exit
+          transition={{ duration: 0.3, ease: "easeInOut" }} // Configure transition
+          className="w-full h-full" // Ensure simulation fills the container
+        >
+          <MaxwellsDemon />
         </motion.div>
       );
     } else {

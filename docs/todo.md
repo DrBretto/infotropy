@@ -65,17 +65,17 @@ These tasks focus on setting up the basic project structure, main components, st
   - [x] Build the application.
   - [x] Deploy the updated build to S3.
   - [x] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
-- [ ] **Revise Layout Implementation (Attempt 6 - Final Tweaks):**
-  - [ ] Set global background to black using standard CSS on the `main` tag.
-  - [ ] Make the header text smaller using Tailwind classes.
-  - [ ] Change the footer copyright text to "drbretto".
-  - [ ] Review component styling for text color inheritance with the global black background.
-  - [ ] Run all tests.
-  - [ ] Commit the changes to Git.
-  - [ ] Push the changes to the remote repository.
-  - [ ] Build the application.
-  - [ ] Deploy the updated build to S3.
-  - [ ] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
+- [x] **Revise Layout Implementation (Attempt 6 - Final Tweaks):**
+  - [x] Set global background to black using standard CSS on the `main` tag.
+  - [x] Make the header text smaller using Tailwind classes.
+  - [x] Change the footer copyright text to "drbretto".
+  - [x] Review component styling for text color inheritance with the global black background.
+  - [x] Run all tests.
+  - [x] Commit the changes to Git.
+  - [x] Push the changes to the remote repository.
+  - [x] Build the application.
+  - [x] Deploy the updated build to S3.
+  - [x] Update documentation files with any implementation-specific details or decisions made during these revised tasks.
 
 ## Future Module Tasks
 
@@ -91,8 +91,8 @@ These tasks relate to setting up the AWS environment and deploying the applicati
 - [x] Apply a bucket policy for public read access using the "personal" profile.
 - [x] Perform an initial build of the application (`npm run build` or `yarn build`).
 - [x] Deploy the built application to the S3 bucket using `aws s3 sync` with the "personal" profile and `--delete` flag.
-- [ ] Verify the deployed application is accessible via the S3 static website endpoint. (This step requires manual verification by the user).
-- [ ] (Optional) Set up a CI/CD pipeline for automated building and deployment.
+- [x] Verify the deployed application is accessible via the S3 static website endpoint. (This step requires manual verification by the user).
+- [x] (Optional) Set up a CI/CD pipeline for automated building and deployment. (Skipped as per user instruction)
 
 ## Decision Log
 

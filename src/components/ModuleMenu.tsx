@@ -9,6 +9,7 @@ const ModuleMenu: React.FC<ModuleMenuProps> = ({ onSelectModule }) => {
   // Placeholder list of modules - will be expanded later
   const modules = [
     { name: "Matter.js Simulation", id: "matterjs-simulation" },
+    { name: "Maxwell's Demon", id: "maxwells-demon" }, // Added Maxwell's Demon module
     // Add future modules here
   ];
 

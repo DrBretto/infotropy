@@ -10,9 +10,6 @@ import CentralContentWindow from "./components/CentralContentWindow";
 import NavigationButtons from "./components/NavigationButtons";
 import ChatBoxPlaceholder from "./components/ChatBoxPlaceholder"; // Import the ChatBoxPlaceholder component
 
-// Import the Matter.js Simulation module
-import MatterJsSimulation from "./modules/matterjs-simulation/MatterJsSimulation";
-
 // Import the main CSS file (now in src/)
 import "./app.css";
 
@@ -20,6 +17,8 @@ import "./app.css";
 const moduleDescriptions: { [key: string]: string } = {
   "matterjs-simulation":
     "A simple physics simulation using Matter.js, demonstrating basic rigid body dynamics with boundaries and bouncing balls.",
+  "maxwells-demon":
+    "A physics simulation demonstrating Maxwell's Demon concept with bouncing balls, a controllable door, and dynamic background shading based on ball distribution.", // Description for Maxwell's Demon module
   // Add descriptions for future modules here
 };
 
@@ -84,7 +83,8 @@ function App() {
             activeModule={activeModule}
             onSelectModule={handleSelectModule}
             layoutState={layoutState}
-          />
+          />{" "}
+          {/* Pass props to CentralContentWindow */}
           <ChatBoxPlaceholder />
         </div>
       </motion.div>
