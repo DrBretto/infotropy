@@ -41,7 +41,7 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 8.  Configure the Matter.js engine to disable gravity.
 9.  Create static rectangular bodies for the arena walls (top, bottom, left, right).
 10. Create a static rectangular body for the central barrier.
-11. Create a static rectangular body for the door within the central barrier, with increased height.
+11. Create a static rectangular body for the door within the central barrier, with increased height and a distinct render color to make it visible and clickable.
 12. Implement state variables for `ballBounceCount`, `leftSideCount`, `rightSideCount`, and `isDoorOpen`. Initialize `ballBounceCount` to 0, `leftSideCount` and `rightSideCount` based on initial ball distribution, and `isDoorOpen` to `false`.
 13. Generate 20 circular bodies (balls) with appropriate properties, random initial positions, and doubled initial velocities. Set their render color to white.
 14. Add all static and dynamic bodies to the Matter.js `World`.
@@ -50,10 +50,10 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 17. Implement logic within the simulation loop or a separate interval to track ball positions and update `leftSideCount` and `rightSideCount`.
 18. Render two background `div` elements behind the canvas for dynamic shading.
 19. Implement logic to calculate the ball distribution imbalance based on `leftSideCount` and `rightSideCount`.
-20. Dynamically update the background color of the shading `div`s based on the imbalance, using dark mode friendly red and blue shades that fade with the degree of imbalance.
-21. Remove the door toggle button from the UI.
-22. Implement click detection on the Matter.js render instance to toggle the door state when the door body is clicked.
-23. Adjust the layout and styling of the simulation area and UI elements to ensure everything fits properly within the `CentralContentWindow` and the ball counts are visible.
+20. Investigate and fix the dynamic background shading logic to ensure it correctly reflects the ball distribution imbalance with appropriate color interpolation (red for more balls, blue for fewer balls, fading with imbalance). **(Completed)**
+21. Implement click detection on the Matter.js render instance to toggle the door state when the door body is clicked, ensuring it only affects the door and does not interfere with other application events. **(Completed)**
+22. Adjust the layout and styling of the simulation area and UI elements to ensure everything fits properly within the `CentralContentWindow` and the ball counts are visible. **(Completed)**
+23. Investigate and fix the white border around the main application screen. **(Completed)**
 24. Display the `ballBounceCount` state in the component's UI.
 25. Apply Tailwind CSS classes for component styling, adhering to the terminal aesthetic.
 26. Add Standard CSS rules for the dynamic background shading elements.
@@ -64,7 +64,7 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 31. Write unit tests for the ball counting and background color calculation logic.
 32. Write integration tests for the `MaxwellsDemon` component, including testing the clickable door functionality.
 33. Ensure all tests pass.
-34. Update [`docs/modules/maxwells-demon.md`](docs/modules/maxwells-demon.md) with any implementation details.
+34. Update [`docs/modules/maxwells-demon.md`](docs/modules/maxwells-demon.md) with any implementation details. **(Completed)**
 35. Update [`docs/todo-maxwells-demon.md`](docs/todo-maxwells-demon.md) by checking off completed items.
 36. Commit changes to Git.
 37. Push changes to the remote repository.
@@ -76,13 +76,14 @@ This module will implement a 2D physics simulation using the Matter.js library, 
 The core simulation logic for the Maxwell's Demon module has been implemented in [`src/modules/maxwells-demon/MaxwellsDemon.tsx`](src/modules/maxwells-demon/MaxwellsDemon.tsx). This includes:
 
 - Setting up the Matter.js engine, renderer, and world with gravity disabled.
-- Creating the arena walls, central barrier, and the door with increased height.
+- Creating the arena walls, central barrier, and the door with increased height and a gray render color.
 - Generating and adding 20 balls to the simulation with initial random velocities and white color.
 - Implementing collision detection to count ball-to-ball bounces.
 - Tracking the number of balls on the left and right sides of the barrier.
-- Implementing logic to dynamically update the background color of two overlay `div` elements based on the ball distribution imbalance, using interpolated dark mode friendly red and blue shades.
-- The door toggle button has been added to the UI but needs to be removed and replaced with clickable door functionality.
-- The layout and positioning of UI elements need adjustment to ensure visibility and proper fit within the window.
+- Implementing logic to dynamically update the background color of two overlay `div` elements based on the ball distribution imbalance, using interpolated dark mode friendly red and blue shades. This shading is now visible and working correctly.
+- Clickable door functionality has been implemented and correctly toggles the door's state when the door body is clicked.
+- The layout and positioning of UI elements have been adjusted to ensure visibility and proper fit within the window. The bottom of the simulation area is no longer cut off.
+- The white border around the main application screen has been removed.
 - The module has been integrated into the application menu and rendering logic in `App.tsx` and `CentralContentWindow.tsx`.
 - Basic Framer Motion animations for the module's entry and exit have been added.
 
@@ -113,19 +114,19 @@ graph TD
     CentralContentWindow -- Renders based on state --> MaxwellsDemonModule
 
     MaxwellsDemonModule --> SimulationCanvas
-    MaxwellsDemonModule --> ClickableDoor (New)
+    MaxwellsDemonModule --> ClickableDoor
     MaxwellsDemonModule --> BounceCountDisplay
-    MaxwellsDemonModule --> BackgroundShading (Dynamic CSS)
-
-    MaxwellsDemonModule -- Uses --> MatterJsEngine
-    MatterJsEngine -- Detects --> Collisions
-    Collisions -- Updates --> BallBounceCountState
-    MatterJsEngine -- Tracks --> BallPositions
-    BallPositions -- Updates --> BallSideCountsState
-    BallSideCountsState -- Updates --> BackgroundShading
+    MaxwellsDemonModule --> BackgroundShading
 
     ClickableDoor -- Triggers --> ToggleDoorState
     ToggleDoorState -- Modifies --> MatterJsEngine (add/remove door body)
+
+    MatterJsEngine -- Detects --> Collisions (Ball-to-Ball Confirmed)
+    Collisions -- Updates --> BallBounceCountState
+
+    MatterJsEngine -- Tracks --> BallPositions
+    BallPositions -- Updates --> BallSideCountsState
+    BallSideCountsState -- Updates --> BackgroundShading
 
     ModuleMenu -- Selects Module --> App (Updates state)
 ```

@@ -128,7 +128,7 @@ const MaxwellsDemon: React.FC = () => {
       container.offsetHeight / 2, // Use container dimensions
       doorWidth,
       doorHeight,
-      { isStatic: true, label: "door" } // Add a label to identify the door
+      { isStatic: true, label: "door", render: { fillStyle: "#888888" } } // Add a label and render style to identify the door
     );
     doorRef.current = door;
 
@@ -257,34 +257,29 @@ const MaxwellsDemon: React.FC = () => {
     const blueColor = [0, 0, 255]; // Pure blue
     const blackColor = [0, 0, 0]; // Black
 
-    // Interpolate between black and the color based on imbalance ratio
-    const interpolateColor = (color: number[], ratio: number) => {
-      const r = Math.round(blackColor[0] + (color[0] - blackColor[0]) * ratio);
-      const g = Math.round(blackColor[1] + (color[1] - blackColor[1]) * ratio);
-      const b = Math.round(blackColor[2] + (color[2] - blackColor[2]) * ratio);
-      return `rgb(${r}, ${g}, ${b})`;
-    };
+    // Calculate opacity based on imbalance ratio (0 for equal, 1 for max imbalance)
+    const opacity = imbalanceRatio;
 
     if (leftSideCount > rightSideCount) {
       // Left side has more balls (red), Right side has fewer (blue)
       setLeftBackgroundStyle({
-        backgroundColor: interpolateColor(redColor, imbalanceRatio),
+        backgroundColor: `rgba(${redColor[0]}, ${redColor[1]}, ${redColor[2]}, ${opacity})`,
       });
       setRightBackgroundStyle({
-        backgroundColor: interpolateColor(blueColor, imbalanceRatio),
+        backgroundColor: `rgba(${blueColor[0]}, ${blueColor[1]}, ${blueColor[2]}, ${opacity})`,
       });
     } else if (rightSideCount > leftSideCount) {
       // Right side has more balls (red), Left side has fewer (blue)
       setRightBackgroundStyle({
-        backgroundColor: interpolateColor(redColor, imbalanceRatio),
+        backgroundColor: `rgba(${redColor[0]}, ${redColor[1]}, ${redColor[2]}, ${opacity})`,
       });
       setLeftBackgroundStyle({
-        backgroundColor: interpolateColor(blueColor, imbalanceRatio),
+        backgroundColor: `rgba(${blueColor[0]}, ${blueColor[1]}, ${blueColor[2]}, ${opacity})`,
       });
     } else {
-      // Equal distribution (black)
-      setLeftBackgroundStyle({ backgroundColor: "rgb(0, 0, 0)" });
-      setRightBackgroundStyle({ backgroundColor: "rgb(0, 0, 0)" });
+      // Equal distribution (black with 0 opacity)
+      setLeftBackgroundStyle({ backgroundColor: "rgba(0, 0, 0, 0)" });
+      setRightBackgroundStyle({ backgroundColor: "rgba(0, 0, 0, 0)" });
     }
   }, [leftSideCount, rightSideCount]); // Rerun effect when counts change
 

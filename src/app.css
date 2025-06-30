@@ -17,7 +17,7 @@ main {
   width: 100%;
   height: 100%;
   background-color: black;
-  border: 2px solid green;
+
   color: green; /* Primary text color within the screen */
   box-sizing: border-box; /* Include border in element's total width and height */
   /* Tailwind classes for rounded corners, shadow, overflow, flex, and spacing will be applied in App.tsx */
